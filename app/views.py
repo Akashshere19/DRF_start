@@ -53,9 +53,10 @@ def employeeDetailsView(request,pk):
         else:
             return Response(serializers.errors)
 
-
+@api_view(['GET'])
 def usersListView(request):
-    users =   User.objects.all()
-    print(users)  
-    serializer = UserSerializer(users,many=True)
-    return JsonResponse(serializer.data,safe=False)
+    if request.method == 'GET':
+        users =   User.objects.all()
+        print(users)  
+        serializer = UserSerializer(users,many=True)
+        return Response(serializer.data)
